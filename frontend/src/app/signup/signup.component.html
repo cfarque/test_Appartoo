@@ -1,0 +1,37 @@
+<div class="container">
+  <h2>Bienvenue sur <span class="title">PANGALOONS</span> !</h2>
+  <div class="login-wrapper">
+    <form [formGroup]="signupForm" (ngSubmit)="signup()" class="form">
+      <div class="form-group">
+        <label class="label">Email</label>
+        <input type="email" class="form-control" formControlName="email" />
+      </div>
+      <div class="form-group">
+        <label class="label">Nom d'utilisateur</label>
+        <input
+          type="username"
+          class="form-control"
+          formControlName="username"
+        />
+      </div>
+      <div class="form-group">
+        <label class="label">Mot de passe</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+        />
+      </div>
+      <div class="form-group">
+        <label class="label">Confirmer votre mot de passe</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="secondPassword"
+        />
+      </div>
+      <button type="submit" class="btn">S'inscrire</button>
+    </form>
+    <a class="link" routerLink="/login">Déjà un compte? </a>
+  </div>
+</div>

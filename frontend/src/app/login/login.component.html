@@ -1,0 +1,24 @@
+<div class="img-container">
+  <img src="../../assets/pango-debout.png" alt="dessin pangolin" />
+  <div class="container">
+    <h2>Heureux de vous revoir !</h2>
+    <div class="login-wrapper">
+      <form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" formControlName="email" />
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+          />
+        </div>
+        <button type="submit" class="btn">Se connecter</button>
+      </form>
+      <a class="link" routerLink="/signup">Je veux m'inscrire!</a>
+    </div>
+  </div>
+</div>
