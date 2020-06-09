@@ -9,10 +9,12 @@
         <div>Date de naissance : {{ this.dateOfBirth }}</div>
         <div>Famille : {{ this.data["account"]["subfamily"] }}</div>
         <div>Race : {{ this.data["account"]["breed"] }}</div>
+        <div>Plat préféré : {{ this.data["account"]["food"] }}</div>
         <div>
           Mes amis :
           <li *ngFor="let friend of friends">
-            {{ friend.username }}
+            {{ friend.username }} -
+            {{ friend.breed }}
           </li>
         </div>
         <button (click)="logout()" class="btn">Se déconnecter</button>
@@ -78,6 +80,10 @@
           <div class="form-group">
             <label>Race</label>
             <input type="text" class="form-control" formControlName="breed" />
+          </div>
+          <div class="form-group">
+            <label>Plat préféré</label>
+            <input type="text" class="form-control" formControlName="food" />
           </div>
           <button type="submit" class="btn btn-primary">
             Modifier mes infos

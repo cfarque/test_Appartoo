@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 import 'moment/locale/fr';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,9 @@ import 'moment/locale/fr';
 export class HomeComponent implements OnInit {
   addFriendsForm: FormGroup;
   updateForm: FormGroup;
-  data: object = {};
+  data: object;
+  friends: object;
   dateOfBirth;
-  friends: object = [];
   loader: boolean = true;
   response: {};
 
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
       email: [],
       dateOfBirth: [],
       username: [],
+      food: [],
     });
     this.addFriendsForm = this.fb.group({
       friends: [],
@@ -63,6 +65,7 @@ export class HomeComponent implements OnInit {
       );
   }
   update() {
+    console.log('test');
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('id');
     this.httpClient
@@ -85,6 +88,9 @@ export class HomeComponent implements OnInit {
       .subscribe(
         (response) => {
           this.data = response;
+          this.dateOfBirth = moment(response['account']['dateOfBirth']).format(
+            'L'
+          );
         },
         (error) => {
           console.log('Erreur ! : ' + error.message);
@@ -109,7 +115,13 @@ export class HomeComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.friends = response['friends'];
+          console.log(response);
+          if (response['friends']) {
+            this.data = response;
+            this.friends = response['friends'];
+          } else {
+            alert(response['message']);
+          }
         },
         (error) => {
           console.log('Erreur ! : ' + error.message);

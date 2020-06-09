@@ -61,7 +61,7 @@ router.post("/user/login", async (req, res) => {
         res.status(401).json({ message: "Unauthorized" });
       }
     } else {
-      res.status(400).json({ message: "User not found" });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -104,6 +104,10 @@ router.post("/user/update/:id", isAuthenticated, async (req, res) => {
         req.body.subfamily === null || req.body.subfamily === ""
           ? user.account.subfamily
           : req.body.subfamily;
+      user.account.food =
+        req.body.food === null || req.body.food === ""
+          ? user.account.food
+          : req.body.food;
       await user.save();
       res.status(200).json({ account: user.account, email: user.email });
     } else {
@@ -126,35 +130,43 @@ router.post("/user/update/friend/:id", isAuthenticated, async (req, res) => {
     const indexOfFriend = userToUpdateFriends.account.friends.findIndex(
       (friend) => friend.username === friendUsername
     );
-
-    if (indexOfFriend !== -1) {
-      userToUpdateFriends.account.friends.splice(indexOfFriend, 1);
-      const indexOfUser = friendToUpdate.account.friends.indexOf(id);
-      friendToUpdate.account.friends.splice(indexOfUser, 1);
-      await userToUpdateFriends.save();
-      await friendToUpdate.save();
-      res.json({
-        message: "Friend deleted",
-        friends: [userToUpdateFriends.account.friends],
-      });
-    } else if (indexOfFriend === -1) {
-      userToUpdateFriends.account.friends.push({
-        username: friendToUpdate.account.username,
-        id: friendToUpdate._id,
-      });
-
-      friendToUpdate.account.friends.push({
-        username: userToUpdateFriends.account.username,
-        id: userToUpdateFriends._id,
-      });
-      await userToUpdateFriends.save();
-      await friendToUpdate.save();
-      res.json({
-        message: "Friend added",
-        friends: [userToUpdateFriends.account.friends],
-      });
+    if (friendToUpdate !== null) {
+      if (indexOfFriend !== -1) {
+        userToUpdateFriends.account.friends.splice(indexOfFriend, 1);
+        const indexOfUser = friendToUpdate.account.friends.indexOf(id);
+        friendToUpdate.account.friends.splice(indexOfUser, 1);
+        await userToUpdateFriends.save();
+        await friendToUpdate.save();
+        res.json({
+          message: "Friend deleted",
+          email: userToUpdateFriends.email,
+          account: userToUpdateFriends.account,
+          friends: userToUpdateFriends.account.friends,
+        });
+      } else if (indexOfFriend === -1) {
+        userToUpdateFriends.account.friends.push({
+          username: friendToUpdate.account.username,
+          id: friendToUpdate._id,
+          breed: friendToUpdate.account.breed,
+        });
+        friendToUpdate.account.friends.push({
+          username: userToUpdateFriends.account.username,
+          id: userToUpdateFriends._id,
+          breed: userToUpdateFriends.account.breed,
+        });
+        await userToUpdateFriends.save();
+        await friendToUpdate.save();
+        res.json({
+          message: "Friend added",
+          email: userToUpdateFriends.email,
+          account: userToUpdateFriends.account,
+          friends: userToUpdateFriends.account.friends,
+        });
+      } else {
+        res.status(400).json({ message: "an error occured" });
+      }
     } else {
-      res.status(400).json({ message: "an error occured" });
+      res.json({ message: "no friend" });
     }
   } catch (error) {
     console.log(error.message);

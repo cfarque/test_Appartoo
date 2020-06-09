@@ -35,6 +35,7 @@ const User = mongoose.model("User", {
       type: Boolean,
       default: false,
     },
+    food: { type: String },
   },
 });
 

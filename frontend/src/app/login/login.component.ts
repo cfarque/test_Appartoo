@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       })
       .subscribe(
         (response) => {
+          console.log(response);
           this.data = response;
           const token = response['token'];
           const id = response['id'];
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           console.log('Erreur ! : ' + error.message);
+          alert(error.message);
         }
       );
   }
