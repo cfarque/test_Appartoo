@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Pangoloons';
   env = environment;
   navClass = environment.production ? 'app-toolbar' : 'app-preprod-toolbar';
   version = environment.version;
