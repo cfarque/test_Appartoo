@@ -18,14 +18,14 @@
   justify-content: space-around;
   box-shadow: 1px 0px 18px 5px rgba(34, 34, 34, 0.2);
   align-items: center;
-  height: 550px;
+  height: 560px;
 }
 .my-info {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
-  height: 300px;
+  height: 413px;
 }
 
 li {

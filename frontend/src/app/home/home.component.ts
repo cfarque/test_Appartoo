@@ -78,6 +78,7 @@ export class HomeComponent implements OnInit {
           email: this.updateForm.value.email,
           dateOfBirth: this.updateForm.value.dateOfBirth,
           username: this.updateForm.value.username,
+          food: this.updateForm.value.food,
         },
         {
           headers: {
